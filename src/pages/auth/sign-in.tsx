@@ -1,9 +1,27 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "@radix-ui/react-label";
 import { Helmet } from "react-helmet-async";
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+
+const signInForm = z.object({
+  email: z.string().email()
+})
+
+type SignInFormType = z.infer<typeof signInForm>
 
 export function SignIn() {
+  const { register, handleSubmit, formState: { isSubmitting } } = useForm<SignInFormType>({
+    resolver: zodResolver(signInForm)
+  })
+
+  async function handleSignIn(data: SignInFormType) {
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    alert(JSON.stringify(data))
+  }
+
   return (
     <>
       <Helmet title="Sign In" />
@@ -13,13 +31,13 @@ export function SignIn() {
           <p className="text-sm text-muted-foreground">Acompanhe suas vendas pelo painel do parceiro</p>
         </div>
 
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit(handleSignIn)} className="space-y-4">
           <div className="space-y-2">
             <Label>Seu e-mail</Label>
-            <Input id="email" type="email" placeholder="E-mail" />
+            <Input id="email" type="email" placeholder="E-mail" {...register('email')} />
           </div>
 
-          <Button className="w-full" type="submit">Acessar painel</Button>
+          <Button disabled={isSubmitting} className="w-full" type="submit">Acessar painel</Button>
         </form>
       </div>
     </>
