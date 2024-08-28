@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "@radix-ui/react-label";
 import { Helmet } from "react-helmet-async";
 import { useForm } from 'react-hook-form'
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from 'zod'
 
@@ -37,7 +38,11 @@ export function SignIn() {
 
   return (
     <>
-      <Helmet title="Sign In" />
+      <Helmet title="Login" />
+      <Button variant='secondary' asChild className="absolute top-8 right-8">
+        <Link to={'/sign-up'} className="">Novo estabelecimento</Link>
+      </Button>
+
       <div className="w-[350px] flex flex-col gap-10 justify-startjustify-center">
         <div className="flex flex-col gap-2 text-center">
           <h1 className="text-2xl font-semibold tracking-tighter">Acessar painel</h1>
