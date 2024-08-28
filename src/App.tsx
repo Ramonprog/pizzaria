@@ -1,8 +1,9 @@
-
+import { Button } from './components/ui/button'
+import '@/global.css'
 
 export function App() {
 
   return (
-    <div>hello world</div>
+    <Button>olá mundo</Button>
   )
 }
