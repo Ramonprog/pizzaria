@@ -4,6 +4,10 @@ import '@/global.css'
 export function App() {
 
   return (
-    <Button>olá mundo</Button>
+    <div className="flex justify-center items-center h-screen">
+      <Button>olá mundo</Button>
+    </div>
   )
 }
+
+
