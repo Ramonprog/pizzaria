@@ -44,8 +44,8 @@ export function RevenueChart() {
       <CardContent>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart style={{ fontSize: 12 }} data={data}>
+            <CartesianGrid vertical={false} className="stroke-muted" />
             <Line dataKey="revenue" strokeWidth={2} stroke="#8884d8" />
-
             <XAxis dataKey="date" axisLine={false} tickLine={false} dy={16} />
             <YAxis stroke="#888" axisLine={false} tickLine={false} tickFormatter={value => value.toLocaleString('pt-BR', {
               style: 'currency',
@@ -53,6 +53,7 @@ export function RevenueChart() {
               minimumFractionDigits: 0,
               maximumFractionDigits: 0
             })} />
+
             <Tooltip />
           </LineChart>
         </ResponsiveContainer>

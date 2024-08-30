@@ -1,0 +1,76 @@
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { BarChart } from "lucide-react";
+import { ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import colors from 'tailwindcss/colors'
+
+const data = [
+  {
+    product: 'Pepperoni',
+    amount: 60
+  },
+  {
+    product: 'Calabresa',
+    amount: 40
+  },
+  {
+    product: 'Frango com catupiry',
+    amount: 52
+  },
+  {
+    product: '4 Queijos',
+    amount: 32
+  },
+  {
+    product: 'Mussarela',
+    amount: 43
+  }
+]
+
+const COLORS = [
+  colors.sky['500'],
+  colors.amber['500'],
+  colors.rose['500'],
+  colors.fuchsia['500'],
+  colors.violet['500'],
+]
+
+const RADIAN = Math.PI / 180;
+
+export function PopularProductsChart() {
+  return (
+    <Card className="col-span-3">
+      <CardHeader className="pb-8">
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-base font-medium">Produtos populares</CardTitle>
+          <BarChart className="h-4 w-4 text-muted-foreground" />
+        </div>
+      </CardHeader>
+      <CardContent>
+        <ResponsiveContainer width="100%" height={300}>
+          <PieChart style={{ fontSize: 12 }} data={data}>
+            <Pie
+              labelLine={false}
+              label={
+                ({ cx, cy, midAngle, innerRadius, outerRadius, index, value }) => {
+                  const radius = 12 + innerRadius + (outerRadius - innerRadius);
+                  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+                  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+                  return (
+                    <text x={x} y={y} className="fill-muted-foreground text-sm" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central ">
+                      {`${data[index].product.length > 16 ? `${data[index].product.substring(0, 16)}...` : data[index].product}`}
+                      ({value})
+                    </text>
+                  );
+                }
+              } dataKey={'amount'} nameKey={'product'} data={data} cx='50%' cy='50%' strokeWidth={4}>
+              {data.map((_, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index]} className="stroke-background hover:opacity-80" />
+              ))}
+            </Pie>
+          </PieChart>
+        </ResponsiveContainer>
+      </CardContent>
+    </Card>
+  )
+}
